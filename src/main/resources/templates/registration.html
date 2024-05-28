@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Registration</title>
 </head>
 <body>
-<h1>Register</h1>
-<form th:action="@{/register}" th:object="${userForm}" method="post">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required>
-  <label for="age">Age:</label>
-  <input type="number" id="age" name="age" required>
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-  <label>Password:</label>
-  <input type="password" th:field="*{password}"/>
-  <input type="submit" value="Register">
+<h1>Registration</h1>
+<form th:action="@{/registration}" method="post" th:object="${userForm}">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required />
+  </div>
+  <div>
+    <label for="age">Age:</label>
+    <input type="text" id="age" th:field="*{age}" required />
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" required />
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" th:field="*{password}" required />
+  <button type="submit">Register</button>
+<p><a href="login.html">Back to Login</a></p>
+  </div>
 </form>
-<a href="/users">Back to list</a>
 </body>
 </html>
