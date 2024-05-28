@@ -1,7 +1,7 @@
 package annov4.crud.crud.controller;
 
 import annov4.crud.crud.model.User;
-import annov4.crud.crud.service.UserService;
+import annov4.crud.crud.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @GetMapping()
     public String userOnly(Model model, Authentication authentication) {

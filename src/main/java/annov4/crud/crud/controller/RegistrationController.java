@@ -1,10 +1,9 @@
 package annov4.crud.crud.controller;
 
 import annov4.crud.crud.model.User;
-import annov4.crud.crud.service.UserService;
+import annov4.crud.crud.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RegistrationController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -23,19 +22,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+    public String addUser(@ModelAttribute("userForm") User user, Model model) {
 
-        if (bindingResult.hasErrors()) {
+        if (userService.userExists(user.getName())) {
+            model.addAttribute("error", "User with the same name already exists.");
             return "registration";
         }
-
-        if (!userService.saveUser(userForm)) {
-            model.addAttribute("usernameError", "User with this username already exists");
-            return "registration";
-        }
-
+        userService.saveUser(user);
         return "redirect:/login";
     }
+
 
     @GetMapping("/login")
     public String login() {
