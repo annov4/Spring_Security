@@ -40,18 +40,17 @@ public class RegistrationAndLoginController {
     public String login(@ModelAttribute("userForm") User user, Model model) {
         User foundUser = (User) userService.loadUserByUsername(user.getName());
 
-        if (!(foundUser != null && foundUser.getPassword().equals(user.getPassword()))) {
+        if (foundUser == null || !foundUser.getPassword().equals(user.getPassword())) {
+            model.addAttribute("error", "Invalid username or password.");
+            return "login";
+        }
 
-            if (foundUser.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
+        if (foundUser.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
                 return "redirect:/admin/users";
             }
             if (foundUser.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_USER"))) {
                 return "redirect:/home";
             }
-        } else {
-            model.addAttribute("error", "Invalid username or password.");
-            return "login";
-        }
         return "redirect:/";
     }
 }
