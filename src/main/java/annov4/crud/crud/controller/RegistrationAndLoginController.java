@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
-public class RegistrationController {
+public class RegistrationAndLoginController {
 
     private final UserServiceImpl userService;
 
@@ -40,7 +40,7 @@ public class RegistrationController {
     public String login(@ModelAttribute("userForm") User user, Model model) {
         User foundUser = (User) userService.loadUserByUsername(user.getName());
 
-        if (foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
+        if (!(foundUser != null && foundUser.getPassword().equals(user.getPassword()))) {
 
             if (foundUser.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
                 return "redirect:/admin/users";
