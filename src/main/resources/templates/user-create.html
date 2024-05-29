@@ -27,5 +27,9 @@
     </div>
 </form>
 <a th:href="@{/admin/users}">Back to list</a>
+<a th:href="@{/logout}">Logout</a>
+<div th:if="${error != null}" style="color:red;">
+    <p th:text="${error}"></p>
+</div>
 </body>
 </html>

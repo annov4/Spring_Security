@@ -24,6 +24,9 @@
   <button type="submit">Register</button>
 <p><a href="login.html">Back to Login</a></p>
   </div>
+  <div th:if="${error != null}" style="color:red;">
+    <p th:text="${error}"></p>
+  </div>
 </form>
 </body>
 </html>

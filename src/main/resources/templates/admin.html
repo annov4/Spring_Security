@@ -25,8 +25,10 @@
     </tr>
     </tbody>
 </table>
-<form id="logoutForm" action="login.html" method="get">
-    <button type="submit">Logout</button>
+<a th:href="@{/logout}">Logout</a>
+<div th:if="${error != null}" style="color:red;">
+    <p th:text="${error}"></p>
+</div>
 </form>
 </body>
 </html>
