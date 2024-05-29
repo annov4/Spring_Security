@@ -23,7 +23,6 @@ public class RegistrationAndLoginController {
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") User user, Model model) {
-
         if (userService.userExists(user.getName())) {
             model.addAttribute("error", "User with the same name already exists.");
             return "registration";
@@ -32,25 +31,10 @@ public class RegistrationAndLoginController {
         return "redirect:/login";
     }
     @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(@ModelAttribute("userForm") User user, Model model) {
-        User foundUser = (User) userService.loadUserByUsername(user.getName());
-
-        if (foundUser == null || !foundUser.getPassword().equals(user.getPassword())) {
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
             model.addAttribute("error", "Invalid username or password.");
-            return "login";
         }
-
-        if (foundUser.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
-                return "redirect:/admin/users";
-            }
-            if (foundUser.getRoles().stream().anyMatch(role -> role.getAuthority().equals("ROLE_USER"))) {
-                return "redirect:/home";
-            }
-        return "redirect:/";
+        return "login";
     }
 }
