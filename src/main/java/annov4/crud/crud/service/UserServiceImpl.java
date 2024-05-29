@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         userRepository.save(user);
     }
 
@@ -64,6 +65,8 @@ public class UserServiceImpl implements UserService {
     public boolean userExists(String username) {
         return userRepository.findByName(username) != null;
     }
+
+
     @PostConstruct
     public void init() {
         Role adminRole = new Role(1L, "ROLE_ADMIN");
@@ -73,14 +76,14 @@ public class UserServiceImpl implements UserService {
         User admin = new User();
         admin.setName("admin");
         admin.setEmail("example1");
-        admin.setPassword("1111");
+        admin.setPassword(passwordEncoder.encode("1111"));
         admin.setRoles(new HashSet<>(Collections.singletonList(adminRole)));
         userRepository.save(admin);
 
         User user = new User();
         user.setName("user");
         user.setEmail("example2");
-        user.setPassword("2222");
+        user.setPassword(passwordEncoder.encode("2222"));
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         userRepository.save(user);
     }

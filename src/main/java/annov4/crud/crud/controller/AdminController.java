@@ -24,13 +24,19 @@ public class AdminController {
     }
 
     @GetMapping("/user-create")
-    public String createUserForm(User user) {
+    public String createUserForm(Model model) {
+        model.addAttribute("user", new User());
         return "user-create";
     }
 
     @PostMapping("/user-create")
-    public String saveUser(User user) {
+    public String saveUser(@ModelAttribute("user") User user, Model model) {
+        if (userServiceImpl.userExists(user.getName())) {
+            model.addAttribute("error", "Пользователь с таким именем уже существует.");
+            return "user-create";
+        }
         userServiceImpl.saveUser(user);
+        model.addAttribute("success", "Пользователь успешно создан.");
         return "redirect:/admin/users";
     }
 

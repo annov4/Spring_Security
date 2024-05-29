@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Users List</title>
+    <title>Admin - Users</title>
 </head>
 <body>
-<a href="user-create">Add User</a>
-<table border="1">
+<h1>Users List</h1>
+<table>
     <thead>
     <tr>
         <th>Name</th>
@@ -17,16 +17,17 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.age}"></td>
-        <td th:text="${user.email}"></td>
-        <td><a th:href="@{/user-update/{id}(id=${user.id})}">Edit</a></td>
-        <td><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.age}">Age</td>
+        <td th:text="${user.email}">Email</td>
+        <td><a th:href="@{/admin/user-update/{id}(id=${user.id})}">Edit</a></td>
+        <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
     </tr>
     </tbody>
 </table>
-<form id="logoutForm" action="login.html" method="get">
-    <button type="submit">Logout</button>
-</form>
+
+<a th:href="@{/admin/user-create}">Create User</a>
+<br/>
+<a th:href="@{/logout}">Logout</a>
 </body>
 </html>

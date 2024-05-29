@@ -89,4 +89,5 @@ public class User implements UserDetails {
                 Objects.equals(password, user.password) &&
                 Objects.equals(roles, user.roles);
     }
+
 }
