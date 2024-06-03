@@ -24,9 +24,6 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "age")
-    private int age;
-
     @Column(name = "email")
     private String email;
 
@@ -38,9 +35,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-                .collect(Collectors.toSet());
+        return getRoles();
     }
 
     @Override
@@ -72,22 +67,5 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        User user = (User) obj;
-        return age == user.age &&
-                Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(roles, user.roles);
-    }
 
 }

@@ -9,7 +9,6 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Age</th>
         <th>Email</th>
         <th>Update</th>
         <th>Remove</th>
@@ -18,7 +17,6 @@
     <tbody>
     <tr th:each="user : ${users}">
         <td th:text="${user.name}">Name</td>
-        <td th:text="${user.age}">Age</td>
         <td th:text="${user.email}">Email</td>
         <td><a th:href="@{/admin/user-update/{id}(id=${user.id})}">Edit</a></td>
         <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>

@@ -66,26 +66,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByName(username) != null;
     }
 
-
-    @PostConstruct
-    public void init() {
-        Role adminRole = new Role(1L, "ROLE_ADMIN");
-        Role userRole = new Role(2L, "ROLE_USER");
-        roleRepository.saveAll(Arrays.asList(adminRole, userRole));
-
-        User admin = new User();
-        admin.setName("admin");
-        admin.setEmail("example1");
-        admin.setPassword(passwordEncoder.encode("1111"));
-        admin.setRoles(new HashSet<>(Collections.singletonList(adminRole)));
-        userRepository.save(admin);
-
-        User user = new User();
-        user.setName("user");
-        user.setEmail("example2");
-        user.setPassword(passwordEncoder.encode("2222"));
-        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
-        userRepository.save(user);
-    }
-
 }

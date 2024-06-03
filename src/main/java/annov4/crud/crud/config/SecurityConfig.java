@@ -27,6 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+    @Autowired
+    public void configure(AuthenticationManagerBuilder authenticationMgr) throws Exception {
+        authenticationMgr.inMemoryAuthentication()
+                .withUser("admin").password(passwordEncoder().encode("1111")).roles("ADMIN")
+                .and()
+                .withUser("user").password(passwordEncoder().encode("2222")).roles("USER");
+
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
